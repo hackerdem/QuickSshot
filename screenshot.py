@@ -1,9 +1,12 @@
 from pynput import keyboard
 import os
 import subprocess,datetime
-import pyscreeze
-
+import pyscreeze,winsound
+from playsound import playsound
 repository='C:\Screenshot_Repository'
+def warning():
+    winsound.Beep(440, 500)
+    #playsound('\Projects\QuickShot\camsound.mp3')
 def numbering():  
     return len([name for name in os.listdir(repository) if os.path.isfile(os.path.join(repository, name))])+1
 
@@ -17,7 +20,9 @@ def repo():
     if not os.path.isdir(repository):os.makedirs(repository)
     scrshot_time=datetime.datetime.now().strftime("%Y%m%d_%H%M%S")
     shot=pyscreeze.screenshot()
-    screenshot(shot,scrshot_time)
+    if shot:
+        warning()
+        screenshot(shot,scrshot_time)
     
     
 def on_press(key):
